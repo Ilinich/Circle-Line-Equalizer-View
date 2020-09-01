@@ -10,30 +10,28 @@ class CircleLineEqualizerFragment : Fragment(R.layout.equalizr_fragment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        radioPageEqualizer.apply {
-//            setViewBackgroundResource(R.color.equalizer_bg)
-            //setBackgroundResource(R.color.equalizer_bg)
-        }
+        equalizerView.setViewBackgroundResource(R.color.equalizer_bg)
 
-        radioPagePlayControlPlay.setOnClickListener {
+        playControlPlay.setOnClickListener {
             playPause(true)
         }
 
-        radioPagePlayControlStop.setOnClickListener {
+        playControlStop.setOnClickListener {
             playPause(false)
         }
     }
 
     private fun playPause(isPlaying: Boolean) {
-        radioPagePlayControlStop.visibility(isPlaying)
-        radioPagePlayControlPlay.visibility(!isPlaying)
+        playControlStop.visibility(isPlaying)
+        playControlPlay.visibility(!isPlaying)
 
         if (isPlaying) {
-            radioPageEqualizer.onStart()
+            equalizerView.start()
         } else {
-            radioPageEqualizer.onStop()
+            equalizerView.stop()
         }
 
+        equalizerView.setViewBackgroundResource(R.color.equalizer_bg)
     }
 }
 

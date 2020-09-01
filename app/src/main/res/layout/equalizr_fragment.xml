@@ -24,7 +24,7 @@
         >
         
         <com.begoml.circlelineequalizerview.CircleLineEqualizerView
-            android:id="@+id/radioPageEqualizer"
+            android:id="@+id/equalizerView"
             android:layout_width="160dp"
             android:layout_height="160dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -47,10 +47,10 @@
             >
             
             <ImageView
-                android:id="@+id/radioPagePlayControlStop"
+                android:id="@+id/playControlStop"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@drawable/ic_channel_stop"
+                android:src="@drawable/ic_stop"
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintDimensionRatio="1:1"
@@ -61,10 +61,10 @@
                 />
             
             <ImageView
-                android:id="@+id/radioPagePlayControlPlay"
+                android:id="@+id/playControlPlay"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@drawable/ic_channel_play"
+                android:src="@drawable/ic_play"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintEnd_toEndOf="parent"

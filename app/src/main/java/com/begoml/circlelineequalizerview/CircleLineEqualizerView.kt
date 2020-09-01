@@ -29,15 +29,15 @@ class CircleLineEqualizerView @JvmOverloads constructor(
             }
 
             override fun surfaceDestroyed(holder: SurfaceHolder) {
-                stop()
+                destroyed()
             }
 
             override fun surfaceCreated(holder: SurfaceHolder) {
                 drawThread = CircleLineEqualizerDrawThread(getHolder()).apply {
                     initData(
-                        lineWidth,
-                        width,
-                        height
+                        lineWidth = lineWidth,
+                        width = width,
+                        height = height
                     )
                     start()
                     drawThread = this
@@ -48,31 +48,19 @@ class CircleLineEqualizerView @JvmOverloads constructor(
 
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
         super.onLayout(changed, left, top, right, bottom)
+
         lineWidth = width * LINE_WIDTH
     }
 
-    fun onStart() {
+    fun start() {
         drawThread?.isVisualizationEnabled = true
     }
 
-    fun onStop() {
-//        lines.forEach {
-//            it.stop()
-//        }
-//
-//        Handler().postDelayed({
-//            animator.cancel()
-//
-//            //todo concurrency
-//            isVisualizationEnabled = false
-//
-//            lines.clear()
-//        }, TIME_FOR_FINISH_ANIMATION)
-
+    fun stop() {
         drawThread?.isVisualizationEnabled = false
     }
 
-    private fun stop() {
+    private fun destroyed() {
         var retry = true
         // завершаем работу потока
         drawThread?.isRunning = false

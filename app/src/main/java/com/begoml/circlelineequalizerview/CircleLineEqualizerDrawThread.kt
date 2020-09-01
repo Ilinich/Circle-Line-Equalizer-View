@@ -12,7 +12,7 @@ import kotlin.concurrent.fixedRateTimer
 class CircleLineEqualizerDrawThread(private val surfaceHolder: SurfaceHolder) : Thread() {
 
     private val lines by lazy { mutableListOf<Line>() }
-    private val colors by lazy { initColors(SIZE_LINES) }
+    private val colors by lazy { initColors() }
 
     private val random by lazy { ThreadLocalRandom.current() }
 
@@ -20,14 +20,17 @@ class CircleLineEqualizerDrawThread(private val surfaceHolder: SurfaceHolder) : 
     private var width: Int = 0
     private var height: Int = 0
 
+    @Volatile
     private var background: Int = 0
 
     private var startColor = 0xDB017D
     private var endColor = 0x253786
 
     // flag can draw lines or not
+    @Volatile
     var isVisualizationEnabled: Boolean = false
 
+    @Volatile
     var isRunning: Boolean = true
 
     // flag can change color for lines
@@ -89,12 +92,11 @@ class CircleLineEqualizerDrawThread(private val surfaceHolder: SurfaceHolder) : 
                 val startPoint = line.startPoint
                 val endPoint = line.currentPoint
 
-
                 // if we can change color , calculate new position for color
                 val colorPosition = if (isChangeColor) {
                     var rotate = line.colorPosition + 1
 
-                    if (rotate >= 180) {
+                    if (rotate >= SIZE_LINES) {
                         rotate = 0
                     }
 
@@ -102,6 +104,7 @@ class CircleLineEqualizerDrawThread(private val surfaceHolder: SurfaceHolder) : 
                 } else {
                     line.colorPosition
                 }
+
 
                 line.colorPosition = colorPosition
 
@@ -130,11 +133,8 @@ class CircleLineEqualizerDrawThread(private val surfaceHolder: SurfaceHolder) : 
     }
 
     private fun calculate() {
-        if (lines.isNotEmpty()) {
-
-            lines.forEach {
-                it.calculateNextStep()
-            }
+        lines.forEach {
+            it.calculateNextStep()
         }
     }
 
@@ -174,15 +174,19 @@ class CircleLineEqualizerDrawThread(private val surfaceHolder: SurfaceHolder) : 
     /**
      * initialization of colors for lines
      */
-    private fun initColors(count: Int): List<Paint> {
+    private fun initColors(): List<Paint> {
         val colors = mutableListOf<String>()
-        val step = 1.0F / (count / 2)
+        val step = 1.0F / (SIZE_LINES / 2)
         var fraction = 0F
 
-        while (fraction <= 1.0F) {
+        val partSize = SIZE_LINES / 2
+
+        var index = 0;
+        while (index != partSize) {
             val color = ArgbEvaluator().evaluate(fraction, startColor, endColor) as Int
             colors.add(color.toHex())
             fraction += step
+            index++
         }
 
         val secondPartColors = mutableListOf<String>().apply {
@@ -201,11 +205,7 @@ class CircleLineEqualizerDrawThread(private val surfaceHolder: SurfaceHolder) : 
         }
     }
 
-    fun initData(
-        lineWidth: Float,
-        width: Int,
-        height: Int
-    ) {
+    fun initData(lineWidth: Float, width: Int, height: Int) {
         this.lineWidth = lineWidth
         this.width = width
         this.height = height
@@ -239,9 +239,9 @@ class CircleLineEqualizerDrawThread(private val surfaceHolder: SurfaceHolder) : 
     }
 
     companion object {
-        const val ANGLE = 2F //todo why?
-
+        const val ANGLE = 2F
         const val SIZE_LINES = 180
+
         const val MAX_LINES = 360
     }
 }
