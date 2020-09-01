@@ -19,6 +19,8 @@ class CircleLineEqualizerFragment : Fragment(R.layout.equalizr_fragment) {
         playControlStop.setOnClickListener {
             playPause(false)
         }
+
+        equalizerView.setViewBackgroundResource(R.color.equalizer_bg)
     }
 
     private fun playPause(isPlaying: Boolean) {
@@ -30,8 +32,12 @@ class CircleLineEqualizerFragment : Fragment(R.layout.equalizr_fragment) {
         } else {
             equalizerView.stop()
         }
+    }
 
-        equalizerView.setViewBackgroundResource(R.color.equalizer_bg)
+    override fun onPause() {
+        playPause(false)
+
+        super.onPause()
     }
 }
 

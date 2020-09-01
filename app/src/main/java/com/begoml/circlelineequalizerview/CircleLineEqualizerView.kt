@@ -15,7 +15,7 @@ class CircleLineEqualizerView @JvmOverloads constructor(
     private var lineWidth: Float = 0F
     private var background: Int = 0
 
-    private var drawThread: CircleLineEqualizerDrawThread? = null
+    private lateinit var drawThread: CircleLineEqualizerDrawThread
 
     init {
         holder.addCallback(object : SurfaceHolder.Callback {
@@ -42,6 +42,10 @@ class CircleLineEqualizerView @JvmOverloads constructor(
                     start()
                     drawThread = this
                 }
+
+                if (background != 0) {
+                    drawThread.setBackgroundColor(ContextCompat.getColor(context, background))
+                }
             }
         })
     }
@@ -53,21 +57,25 @@ class CircleLineEqualizerView @JvmOverloads constructor(
     }
 
     fun start() {
-        drawThread?.isVisualizationEnabled = true
+        drawThread.isVisualizationEnabled = true
     }
 
     fun stop() {
-        drawThread?.isVisualizationEnabled = false
+        drawThread.isVisualizationEnabled = false
     }
 
-    private fun destroyed() {
+    fun destroyed() {
         var retry = true
+
         // завершаем работу потока
-        drawThread?.isRunning = false
-        drawThread?.stopAnimation()
+        drawThread.apply {
+            isRunning = false
+            stopAnimation()
+        }
+
         while (retry) {
             try {
-                drawThread?.join()
+                drawThread.join()
                 retry = false
             } catch (e: InterruptedException) { // если не получилось, то будем пытаться еще и еще
             }
@@ -77,11 +85,12 @@ class CircleLineEqualizerView @JvmOverloads constructor(
     fun setViewBackgroundResource(it: Int) {
         background = it
 
-        if (it == 0) return
-        drawThread?.setBackgroundColor(ContextCompat.getColor(context, background))
+        if (this::drawThread.isInitialized && background != 0) {
+            drawThread.setBackgroundColor(ContextCompat.getColor(context, background))
+        }
     }
 
     companion object {
-        const val LINE_WIDTH = 0.0075F //todo why?
+        const val LINE_WIDTH = 0.0075F
     }
 }

@@ -80,8 +80,7 @@ class CircleLineEqualizerDrawThread(private val surfaceHolder: SurfaceHolder) : 
             var i = 0
             while (i < MAX_LINES) {
 
-                val position =
-                    i * SIZE_LINES / MAX_LINES
+                val position = i * SIZE_LINES / MAX_LINES
                 val line = lines[position]
 
                 canvas.save()
