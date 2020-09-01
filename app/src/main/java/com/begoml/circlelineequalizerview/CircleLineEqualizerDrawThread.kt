@@ -142,7 +142,7 @@ class CircleLineEqualizerDrawThread(private val surfaceHolder: SurfaceHolder) : 
      * interpolator for time when can change color
      */
     private fun startTimer() {
-        timer = fixedRateTimer(period = 80L, initialDelay = 500L) {
+        timer = fixedRateTimer(period = 80L, initialDelay = 80L) {
             canChangeColor = true
         }
     }
