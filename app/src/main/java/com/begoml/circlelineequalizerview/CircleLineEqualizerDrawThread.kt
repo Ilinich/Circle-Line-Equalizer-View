@@ -39,7 +39,7 @@ class CircleLineEqualizerDrawThread(private val surfaceHolder: SurfaceHolder) : 
     private var timer: Timer? = null
 
     private val randomStartPoint
-        get() = random.nextDouble(0.7, 0.9)
+        get() = random.nextDouble(MIN_SIZE_IN_PERCENT, MAX_SIZE_IN_PERCENT)
 
     override fun run() {
         timer?.cancel()
@@ -239,6 +239,9 @@ class CircleLineEqualizerDrawThread(private val surfaceHolder: SurfaceHolder) : 
         const val SIZE_LINES = 180
 
         const val MAX_LINES = 360
+
+        const val MIN_SIZE_IN_PERCENT = 0.7
+        const val MAX_SIZE_IN_PERCENT = 0.9
     }
 }
 

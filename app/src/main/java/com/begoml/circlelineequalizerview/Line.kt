@@ -2,8 +2,8 @@ package com.begoml.circlelineequalizerview
 
 class Line(
     val startPoint: Float,
-    var percent: Double = 0.7,
-    var colorPosition: Int = 0
+    var percent: Double,
+    var colorPosition: Int
 ) {
 
     private val linePoints by lazy { mutableListOf<Float>() }
