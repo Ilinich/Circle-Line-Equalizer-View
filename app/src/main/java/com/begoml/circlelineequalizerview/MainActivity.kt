@@ -10,7 +10,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction().apply {
-                add(R.id.containerId, CircleLineEqualizerFragment())
+                add(R.id.containerId, EqualizerFragment())
                 commit()
             }
         }

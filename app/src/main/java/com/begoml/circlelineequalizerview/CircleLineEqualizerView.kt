@@ -53,7 +53,7 @@ class CircleLineEqualizerView @JvmOverloads constructor(
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
         super.onLayout(changed, left, top, right, bottom)
 
-        lineWidth = width * LINE_WIDTH
+       lineWidth = width * LINE_WIDTH
     }
 
     fun start() {
@@ -77,7 +77,8 @@ class CircleLineEqualizerView @JvmOverloads constructor(
             try {
                 drawThread.join()
                 retry = false
-            } catch (e: InterruptedException) { // если не получилось, то будем пытаться еще и еще
+            } catch (error: InterruptedException) { // если не получилось, то будем пытаться еще и еще
+                println(error)
             }
         }
     }

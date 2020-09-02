@@ -5,7 +5,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.equalizr_fragment.*
 
-class CircleLineEqualizerFragment : Fragment(R.layout.equalizr_fragment) {
+class EqualizerFragment : Fragment(R.layout.equalizr_fragment) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

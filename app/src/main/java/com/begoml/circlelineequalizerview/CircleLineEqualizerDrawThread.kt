@@ -45,18 +45,15 @@ class CircleLineEqualizerDrawThread(private val surfaceHolder: SurfaceHolder) : 
         timer?.cancel()
         startTimer()
 
-        var canvas: Canvas?
         while (isRunning) {
 
             if (isVisualizationEnabled) {
-                canvas = surfaceHolder.lockCanvas(null)
+                val canvas = surfaceHolder.lockCanvas(null)
 
                 drawColor(canvas)
                 draw(canvas)
 
-                canvas?.let {
-                    surfaceHolder.unlockCanvasAndPost(canvas)
-                }
+                surfaceHolder.unlockCanvasAndPost(canvas)
 
                 calculate()
             }
