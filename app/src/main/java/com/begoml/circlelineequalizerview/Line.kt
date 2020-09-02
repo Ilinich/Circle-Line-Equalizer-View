@@ -14,19 +14,6 @@ class Line(
     private var isVisualizationEnabled = false
 
     init {
-        initIntermediatePoints()
-    }
-
-    val currentPoint: Float
-        get() = linePoints[step]
-
-    private val findFirstStep
-        get() = (linePoints.size * percent).toInt()
-
-    private val isFirstStep
-        get() = step == 0
-
-    private fun initIntermediatePoints() {
         var percent = ONE_STEP
 
         linePoints.add(startPoint)
@@ -41,8 +28,17 @@ class Line(
         }
 
         step = findFirstStep
-
     }
+
+    val currentPoint: Float
+        get() = linePoints[step]
+
+    private val findFirstStep
+        get() = (linePoints.size * percent).toInt()
+
+    private val isFirstStep
+        get() = step == 0
+
 
     fun calculateNextStep() {
         if (!isVisualizationEnabled && isFirstStep) {
